@@ -173,6 +173,9 @@ navTabs.forEach(tab => {
 
     window.scrollTo({ top: 0, behavior: 'instant' });
 
+    // Notify particle system of page change
+    if (window._particleSetPage) window._particleSetPage(target);
+
     // Re-init things when switching to specific pages
     if (target === 'practice') {
       initMatchGameIfNeeded();
@@ -801,7 +804,14 @@ document.getElementById('new-exam-btn').addEventListener('click', () => {
 });
 
 /* ============================================================
-   PARTICLE FIELD (mouse-reactive background)
+   PARTICLE SYSTEM — per-page modes
+   ─────────────────────────────────────────────────────────────
+   Library  → constellation: drifting dots + connecting lines
+             (more particles, mouse repulsion, line web)
+   Practice → energy field: pulsing rings that orbit the cursor
+             + sparks fired on mouse movement
+   Exam     → data stream: glyphs/symbols falling top-to-bottom
+             like a slow Matrix; mouse creates brief vortex
    ============================================================ */
 
 (function initParticles() {
@@ -809,112 +819,378 @@ document.getElementById('new-exam-btn').addEventListener('click', () => {
 
   const canvas = document.getElementById('particle-canvas');
   const ctx = canvas.getContext('2d');
-  let width, height, particles;
-  const mouse = { x: -9999, y: -9999 };
-  const MOUSE_RADIUS = 140;       // px — how far the cursor influence reaches
-  const LINK_DIST = 110;          // px — max distance to draw a connecting line
+  let width, height;
+  let activePage = 'library';
 
+  // ── shared mouse state ──────────────────────────────────────
+  const mouse = { x: -9999, y: -9999, vx: 0, vy: 0, _px: -9999, _py: -9999 };
+
+  window.addEventListener('mousemove', e => {
+    mouse.vx = e.clientX - mouse._px;
+    mouse.vy = e.clientY - mouse._py;
+    mouse._px = mouse.x = e.clientX;
+    mouse._py = mouse.y = e.clientY;
+  }, { passive: true });
+  window.addEventListener('mouseout', () => { mouse.x = -9999; mouse.y = -9999; });
+
+  // ── resize ──────────────────────────────────────────────────
   function resize() {
-    width = canvas.width = window.innerWidth;
+    width  = canvas.width  = window.innerWidth;
     height = canvas.height = window.innerHeight;
-    // Scale particle count with viewport area, capped for performance
-    const count = Math.min(90, Math.floor((width * height) / 16000));
-    particles = [];
+    libraryInit();
+    practiceInit();
+    examInit();
+  }
+  window.addEventListener('resize', resize);
+
+  // ── page switch hook ─────────────────────────────────────────
+  // Called from showPage() in the main app logic
+  window._particleSetPage = function(page) {
+    activePage = page;
+    if (page === 'library')  libraryInit();
+    if (page === 'practice') practiceInit();
+    if (page === 'exam')     examInit();
+  };
+
+  // ── visibility ──────────────────────────────────────────────
+  let running = true;
+  document.addEventListener('visibilitychange', () => {
+    running = !document.hidden;
+    if (running) requestAnimationFrame(loop);
+  });
+
+
+  /* ═══════════════════════════════════════════════════════════
+     PAGE 1 — LIBRARY: constellation (dots + connecting lines)
+     ═══════════════════════════════════════════════════════════ */
+  const LIB_MOUSE_R = 160;
+  const LIB_LINK    = 130;
+  let libParticles  = [];
+
+  function libraryInit() {
+    const count = Math.min(180, Math.floor((width * height) / 7000));
+    libParticles = [];
     for (let i = 0; i < count; i++) {
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35,
-        r: 1 + Math.random() * 1.8,
-        orange: Math.random() < 0.22, // most navy, some orange accents
+      libParticles.push({
+        x:      Math.random() * width,
+        y:      Math.random() * height,
+        vx:     (Math.random() - 0.5) * 0.4,
+        vy:     (Math.random() - 0.5) * 0.4,
+        r:      0.8 + Math.random() * 2.2,
+        orange: Math.random() < 0.20,
+        pulse:  Math.random() * Math.PI * 2,   // phase for subtle size pulse
       });
     }
   }
 
-  window.addEventListener('resize', resize);
-  resize();
-
-  window.addEventListener('mousemove', e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  }, { passive: true });
-
-  window.addEventListener('mouseout', () => {
-    mouse.x = -9999;
-    mouse.y = -9999;
-  });
-
-  let running = true;
-  document.addEventListener('visibilitychange', () => {
-    running = !document.hidden;
-    if (running) requestAnimationFrame(frame);
-  });
-
-  function frame() {
-    if (!running) return;
+  function libraryDraw() {
     ctx.clearRect(0, 0, width, height);
 
-    for (const p of particles) {
-      // Gentle repulsion from the cursor
-      const dx = p.x - mouse.x;
-      const dy = p.y - mouse.y;
+    for (const p of libParticles) {
+      // Mouse repulsion
+      const dx = p.x - mouse.x, dy = p.y - mouse.y;
       const dist = Math.hypot(dx, dy);
-      if (dist < MOUSE_RADIUS && dist > 0.001) {
-        const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
-        p.vx += (dx / dist) * force * 0.6;
-        p.vy += (dy / dist) * force * 0.6;
+      if (dist < LIB_MOUSE_R && dist > 0.001) {
+        const f = (LIB_MOUSE_R - dist) / LIB_MOUSE_R;
+        p.vx += (dx / dist) * f * 0.7;
+        p.vy += (dy / dist) * f * 0.7;
       }
 
-      // Damping keeps speeds from running away after a push
-      p.vx *= 0.96;
-      p.vy *= 0.96;
-      // Maintain a tiny baseline drift
-      if (Math.abs(p.vx) < 0.05) p.vx += (Math.random() - 0.5) * 0.04;
-      if (Math.abs(p.vy) < 0.05) p.vy += (Math.random() - 0.5) * 0.04;
+      p.vx *= 0.965; p.vy *= 0.965;
+      if (Math.abs(p.vx) < 0.06) p.vx += (Math.random() - 0.5) * 0.05;
+      if (Math.abs(p.vy) < 0.06) p.vy += (Math.random() - 0.5) * 0.05;
+      p.x += p.vx; p.y += p.vy;
+      p.pulse += 0.018;
 
-      p.x += p.vx;
-      p.y += p.vy;
+      if (p.x < -12) p.x = width + 12;
+      if (p.x > width + 12) p.x = -12;
+      if (p.y < -12) p.y = height + 12;
+      if (p.y > height + 12) p.y = -12;
 
-      // Wrap around edges
-      if (p.x < -10) p.x = width + 10;
-      if (p.x > width + 10) p.x = -10;
-      if (p.y < -10) p.y = height + 10;
-      if (p.y > height + 10) p.y = -10;
+      // Near-cursor brightness boost
+      const glow = dist < LIB_MOUSE_R * 1.2 ? 1 + (1 - dist / (LIB_MOUSE_R * 1.2)) * 1.6 : 1;
+      const pr   = (p.r + Math.sin(p.pulse) * 0.4) * (p.orange ? glow : 1);
 
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = p.orange ? 'rgba(201,106,42,0.35)' : 'rgba(26,39,68,0.22)';
+      ctx.arc(p.x, p.y, pr, 0, Math.PI * 2);
+      ctx.fillStyle = p.orange
+        ? `rgba(201,106,42,${(0.30 + Math.sin(p.pulse) * 0.10) * glow})`
+        : `rgba(26,39,68,${0.18 + Math.sin(p.pulse) * 0.05})`;
       ctx.fill();
     }
 
-    // Connecting lines between nearby particles; brighter near the cursor
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const a = particles[i], b = particles[j];
+    // Connecting lines
+    for (let i = 0; i < libParticles.length; i++) {
+      for (let j = i + 1; j < libParticles.length; j++) {
+        const a = libParticles[i], b = libParticles[j];
         const dx = a.x - b.x, dy = a.y - b.y;
-        const d = Math.hypot(dx, dy);
-        if (d < LINK_DIST) {
-          const midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
-          const mDist = Math.hypot(midX - mouse.x, midY - mouse.y);
-          const nearMouse = mDist < MOUSE_RADIUS * 1.4;
-          const alpha = (1 - d / LINK_DIST) * (nearMouse ? 0.28 : 0.10);
+        const d  = Math.hypot(dx, dy);
+        if (d < LIB_LINK) {
+          const mid   = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+          const mDist = Math.hypot(mid.x - mouse.x, mid.y - mouse.y);
+          const near  = mDist < LIB_MOUSE_R * 1.5;
+          const alpha = (1 - d / LIB_LINK) * (near ? 0.32 : 0.10);
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = nearMouse
-            ? 'rgba(201,106,42,' + alpha + ')'
-            : 'rgba(26,39,68,' + alpha + ')';
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = near
+            ? `rgba(201,106,42,${alpha})`
+            : `rgba(26,39,68,${alpha})`;
+          ctx.lineWidth = near ? 1.2 : 0.8;
           ctx.stroke();
         }
       }
     }
-
-    requestAnimationFrame(frame);
   }
 
-  requestAnimationFrame(frame);
+
+  /* ═══════════════════════════════════════════════════════════
+     PAGE 2 — PRACTICE: energy field
+     Orbiting halos around cursor + sparks ejected on movement
+     ═══════════════════════════════════════════════════════════ */
+  let sparks = [];
+  let rings  = [];
+  let practiceParticles = [];
+
+  function practiceInit() {
+    sparks = [];
+    rings  = [
+      { angle: 0, r: 55,  speed: 0.018, nodeCount: 7,  phase: 0 },
+      { angle: 1.2, r: 95,  speed: -0.011, nodeCount: 11, phase: Math.PI },
+      { angle: 2.4, r: 140, speed: 0.007,  nodeCount: 15, phase: Math.PI / 3 },
+    ];
+    // Ambient drifting particles (fewer, larger, softer)
+    const count = Math.min(60, Math.floor((width * height) / 18000));
+    practiceParticles = [];
+    for (let i = 0; i < count; i++) {
+      practiceParticles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        r: 1.5 + Math.random() * 3,
+        alpha: 0.08 + Math.random() * 0.14,
+        orange: Math.random() < 0.35,
+        life: 1,
+      });
+    }
+  }
+
+  function spawnSparks() {
+    const speed = Math.hypot(mouse.vx, mouse.vy);
+    if (speed < 3 || mouse.x < 0) return;
+    const count = Math.min(6, Math.floor(speed / 4));
+    for (let i = 0; i < count; i++) {
+      const angle = Math.atan2(mouse.vy, mouse.vx) + (Math.random() - 0.5) * 1.4;
+      const s     = 1.5 + Math.random() * speed * 0.18;
+      sparks.push({
+        x: mouse.x + (Math.random() - 0.5) * 20,
+        y: mouse.y + (Math.random() - 0.5) * 20,
+        vx: Math.cos(angle) * s,
+        vy: Math.sin(angle) * s,
+        life: 1,
+        decay: 0.025 + Math.random() * 0.035,
+        r: 1 + Math.random() * 2,
+        orange: Math.random() < 0.6,
+      });
+    }
+  }
+  // Hook into mousemove to spawn sparks
+  window.addEventListener('mousemove', spawnSparks, { passive: true });
+
+  function practiceDraw(t) {
+    ctx.clearRect(0, 0, width, height);
+
+    // Ambient particles
+    for (const p of practiceParticles) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < -10) p.x = width + 10;
+      if (p.x > width + 10) p.x = -10;
+      if (p.y < -10) p.y = height + 10;
+      if (p.y > height + 10) p.y = -10;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.orange
+        ? `rgba(201,106,42,${p.alpha})`
+        : `rgba(26,39,68,${p.alpha})`;
+      ctx.fill();
+    }
+
+    // Sparks
+    for (let i = sparks.length - 1; i >= 0; i--) {
+      const s = sparks[i];
+      s.x += s.vx; s.y += s.vy;
+      s.vx *= 0.93; s.vy *= 0.93;
+      s.life -= s.decay;
+      if (s.life <= 0) { sparks.splice(i, 1); continue; }
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r * s.life, 0, Math.PI * 2);
+      ctx.fillStyle = s.orange
+        ? `rgba(201,106,42,${s.life * 0.75})`
+        : `rgba(26,39,68,${s.life * 0.45})`;
+      ctx.fill();
+    }
+
+    // Orbiting rings — only draw if mouse is on screen
+    if (mouse.x > 0) {
+      for (const ring of rings) {
+        ring.angle += ring.speed;
+        const nodes = ring.nodeCount;
+
+        // Faint ring circle
+        ctx.beginPath();
+        ctx.arc(mouse.x, mouse.y, ring.r, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(201,106,42,0.06)';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Nodes on the ring
+        for (let n = 0; n < nodes; n++) {
+          const a  = ring.angle + (n / nodes) * Math.PI * 2 + ring.phase;
+          const nx = mouse.x + Math.cos(a) * ring.r;
+          const ny = mouse.y + Math.sin(a) * ring.r;
+          const nr = n % 3 === 0 ? 2.4 : 1.2;
+          const al = n % 3 === 0 ? 0.55 : 0.28;
+          ctx.beginPath();
+          ctx.arc(nx, ny, nr, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(201,106,42,${al})`;
+          ctx.fill();
+        }
+
+        // Connect every other node to mouse with faint spoke
+        for (let n = 0; n < nodes; n += 2) {
+          const a  = ring.angle + (n / nodes) * Math.PI * 2 + ring.phase;
+          const nx = mouse.x + Math.cos(a) * ring.r;
+          const ny = mouse.y + Math.sin(a) * ring.r;
+          ctx.beginPath();
+          ctx.moveTo(mouse.x, mouse.y);
+          ctx.lineTo(nx, ny);
+          ctx.strokeStyle = 'rgba(201,106,42,0.08)';
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+      }
+
+      // Cursor dot
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(201,106,42,0.6)';
+      ctx.fill();
+    }
+  }
+
+
+  /* ═══════════════════════════════════════════════════════════
+     PAGE 3 — EXAM: data stream (falling glyphs + mouse vortex)
+     ═══════════════════════════════════════════════════════════ */
+  const GLYPHS = '01アイウエオ∑∫≈≠∂λ∇⊕⊗⌘⌥◆▲▽◇⬡⟨⟩∅∞∈∉∪∩⊆⊇∀∃¬→←↑↓⇒⇐∧∨⊕βγδεζθμπσω';
+  let glyphCols = [];
+
+  function examInit() {
+    const colW   = 28;
+    const numCol = Math.ceil(width / colW);
+    glyphCols    = [];
+    for (let c = 0; c < numCol; c++) {
+      glyphCols.push({
+        x:     c * colW + colW / 2,
+        y:     -(Math.random() * height),      // stagger start heights
+        speed: 0.4 + Math.random() * 0.9,
+        len:   4 + Math.floor(Math.random() * 10),  // trail length
+        chars: Array.from({ length: 20 }, () => pick(GLYPHS)),
+        timer: 0,
+        swapInterval: 8 + Math.floor(Math.random() * 16),
+        orange: Math.random() < 0.12,
+      });
+    }
+  }
+
+  function pick(str) { return str[Math.floor(Math.random() * str.length)]; }
+
+  function examDraw() {
+    // Translucent clear creates the fade-trail effect
+    ctx.fillStyle = 'rgba(245,240,232,0.18)';
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.font = '13px "JetBrains Mono", monospace';
+    ctx.textAlign = 'center';
+
+    for (const col of glyphCols) {
+      col.y += col.speed;
+      col.timer++;
+      if (col.timer >= col.swapInterval) {
+        col.timer = 0;
+        // Randomly mutate one character in the trail
+        const idx = Math.floor(Math.random() * col.chars.length);
+        col.chars[idx] = pick(GLYPHS);
+      }
+
+      // Wrap when the head passes the bottom
+      if (col.y - col.len * 18 > height) {
+        col.y = -Math.random() * height * 0.5;
+        col.speed  = 0.4 + Math.random() * 0.9;
+        col.orange = Math.random() < 0.12;
+      }
+
+      // Mouse vortex: push columns that get close
+      if (mouse.x > 0) {
+        const dx   = col.x - mouse.x;
+        const dy   = col.y - mouse.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 120 && dist > 1) {
+          // Slight horizontal deflection toward outside
+          col.x += (dx / dist) * ((120 - dist) / 120) * 1.2;
+          col.speed = Math.min(col.speed + 0.05, 3);
+        }
+        // Gradually restore x position
+        const targetX = Math.round(col.x / 28) * 28 + 14;
+        col.x += (targetX - col.x) * 0.02;
+      }
+
+      // Draw trail of characters, fading toward the tail
+      for (let i = 0; i < col.len; i++) {
+        const cy    = col.y - i * 18;
+        if (cy < -18 || cy > height + 18) continue;
+        const frac  = 1 - i / col.len;
+        const alpha = frac * (i === 0 ? 0.80 : 0.25 * frac);  // head is bright
+
+        if (col.orange) {
+          ctx.fillStyle = `rgba(201,106,42,${alpha})`;
+        } else {
+          ctx.fillStyle = i === 0
+            ? `rgba(201,106,42,${alpha * 0.9})`       // head always slightly orange
+            : `rgba(26,39,68,${alpha})`;
+        }
+        ctx.fillText(col.chars[i % col.chars.length], col.x, cy);
+      }
+    }
+
+    // Cursor glow orb
+    if (mouse.x > 0) {
+      const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, 80);
+      g.addColorStop(0, 'rgba(201,106,42,0.15)');
+      g.addColorStop(1, 'rgba(201,106,42,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(mouse.x, mouse.y, 80, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+
+  /* ═══════════════════════════════════════════════════════════
+     MAIN LOOP
+     ═══════════════════════════════════════════════════════════ */
+  function loop(t) {
+    if (!running) return;
+    if (activePage === 'library')  libraryDraw();
+    else if (activePage === 'practice') practiceDraw(t);
+    else if (activePage === 'exam')     examDraw();
+    else ctx.clearRect(0, 0, width, height);
+    requestAnimationFrame(loop);
+  }
+
+  resize();
+  requestAnimationFrame(loop);
 })();
 
 /* ============================================================
