@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Vocabulary Lab — Corduroy Intelligence</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ========== SCROLL PROGRESS BAR ========== -->
+  <div id="scroll-progress"></div>
+
+  <!-- ========== NAV ========== -->
+  <nav id="main-nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="logo-mark">C</div>
+        <span class="brand-text">CORDUROY <span class="brand-accent">INTELLIGENCE</span></span>
+      </div>
+      <div class="nav-tabs">
+        <button class="nav-tab active" data-page="library">Library</button>
+        <button class="nav-tab" data-page="practice">Practice</button>
+        <button class="nav-tab" data-page="exam">Exam</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== PAGE: LIBRARY ========== -->
+  <div id="page-library" class="page active">
+
+    <!-- Hero -->
+    <section class="hero" id="library-hero">
+      <div class="hero-glow"></div>
+      <div class="hero-inner" id="library-hero-inner">
+        <div class="hero-eyebrow"><span class="rule"></span>THE COLLECTION<span class="rule"></span></div>
+        <h1 class="hero-headline">The AI vocabulary, in <em>plain</em> English.</h1>
+        <p class="hero-subtitle">Every term your team needs to navigate the AI landscape with confidence.</p>
+        <!-- Stat strip -->
+        <div class="stat-strip">
+          <div class="stat-cell">
+            <span class="stat-num" data-target="40">0</span>
+            <span class="stat-label">Terms</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-num" data-target="8">0</span>
+            <span class="stat-label">Labs</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-num" data-target="8">0</span>
+            <span class="stat-label">Model Families</span>
+          </div>
+          <div class="stat-cell">
+            <span class="stat-num" data-target="5">0</span>
+            <span class="stat-label">Categories</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sub-tabs -->
+    <div class="subtab-bar">
+      <button class="subtab active" data-sub="core-terms">01 · Core Terms</button>
+      <button class="subtab" data-sub="the-labs">02 · The Labs</button>
+      <button class="subtab" data-sub="model-catalog">03 · Model Catalog</button>
+      <button class="subtab" data-sub="category-leaders">04 · Category Leaders</button>
+    </div>
+
+    <!-- ---- Sub-page: Core Terms ---- -->
+    <div id="sub-core-terms" class="sub-page active-sub">
+      <div class="container">
+        <div class="reveal-all-row">
+          <button id="reveal-all-btn" class="btn-outline">Reveal all definitions</button>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="term-section">
+          <div class="section-header sr sr-left">
+            <span class="sec-num">01</span>
+            <div>
+              <h2 class="sec-title">The Stack — Top to Bottom</h2>
+              <p class="sec-desc sr sr-left" style="--sr-delay:90ms">Eight terms cover 80% of any AI conversation. They nest — each one is a subset of the one above it.</p>
+            </div>
+          </div>
+          <div class="terms-grid">
+            <div class="term-card sr" style="--sr-delay:40ms" data-index="0">
+              <div class="term-card-inner">
+                <span class="term-index">01</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Artificial Intelligence</h3>
+                  <span class="term-chip">AI</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def">
+                  <p>Software that performs tasks that normally require human intelligence — language, recognition, planning, decision-making. The umbrella term.</p>
+                </div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms" data-index="1">
+              <div class="term-card-inner">
+                <span class="term-index">02</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Machine Learning</h3>
+                  <span class="term-chip">ML</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def">
+                  <p>A subset of AI where the system learns patterns from data instead of being explicitly programmed. Dominant approach for 15 years.</p>
+                </div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms" data-index="2">
+              <div class="term-card-inner">
+                <span class="term-index">03</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Deep Learning</h3>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def">
+                  <p>Machine learning using neural networks with many layers. The breakthrough behind virtually all modern AI.</p>
+                </div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms" data-index="3">
+              <div class="term-card-inner">
+                <span class="term-index">04</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Neural Network</h3>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def">
+                  <p>A mathematical model loosely inspired by the brain — layers of "neurons" with adjustable weights that learn patterns.</p>
+                </div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms" data-index="4">
+              <div class="term-card-inner">
+                <span class="term-index">05</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Generative AI</h3>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def">
+                  <p>Models that create new content — text, images, audio, video, code — rather than just classifying or predicting from existing data.</p>
+                </div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms" data-index="5">
+              <div class="term-card-inner">
+                <span class="term-index">06</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Large Language Model</h3>
+                  <span class="term-chip">LLM</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def">
+                  <p>A generative model trained on huge text corpora to predict the next word, scaled until it can write, reason, and converse. The thing behind ChatGPT, Claude, Gemini.</p>
+                </div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms" data-index="6">
+              <div class="term-card-inner">
+                <span class="term-index">07</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Foundation Model</h3>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def">
+                  <p>A large, general-purpose model trained once on broad data, then adapted to many downstream uses. "Foundation" because everything else builds on it.</p>
+                </div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms" data-index="7">
+              <div class="term-card-inner">
+                <span class="term-index">08</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Frontier Model</h3>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def">
+                  <p>The current most-capable generation of foundation models — what the industry pushes the limits with (Claude Opus, GPT-5, Gemini Ultra).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="term-section">
+          <div class="section-header sr sr-left">
+            <span class="sec-num">02</span>
+            <div>
+              <h2 class="sec-title">How Models Work — The Machinery</h2>
+              <p class="sec-desc sr sr-left" style="--sr-delay:90ms">If you understand these eight, you can hold your own with anyone selling you an AI capability — or asking you for a budget.</p>
+            </div>
+          </div>
+          <div class="terms-grid">
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">09</span>
+                <div class="term-name-row"><h3 class="term-name">Training</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>The (very expensive) process of feeding a model data so it learns. A frontier model costs $100M–$1B+ and burns months of GPU time.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">10</span>
+                <div class="term-name-row"><h3 class="term-name">Inference</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Running a trained model to actually answer a question. What happens every time you press send. Cheap per call, huge in aggregate.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">11</span>
+                <div class="term-name-row"><h3 class="term-name">Parameters</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>The internal "dials" the model adjusts during training. Frontier LLMs have hundreds of billions to trillions. More ≠ always better.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">12</span>
+                <div class="term-name-row"><h3 class="term-name">Tokens</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>How text is chopped up before the model sees it. Roughly ¾ of a word each. Vendor pricing is almost always per token.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">13</span>
+                <div class="term-name-row"><h3 class="term-name">Context Window</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>How much text a model can "see" at once. 200K tokens ≈ 500 pages. Bigger context = more documents in one shot.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">14</span>
+                <div class="term-name-row"><h3 class="term-name">Embeddings</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Numerical fingerprints of meaning. The model turns every word, sentence, or document into a vector so it can compare ideas mathematically.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">15</span>
+                <div class="term-name-row"><h3 class="term-name">Transformer</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>The neural-network architecture (invented at Google in 2017) behind every modern LLM. The "T" in GPT.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">16</span>
+                <div class="term-name-row"><h3 class="term-name">Compute</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Raw processing power — almost always GPUs from Nvidia. The scarce, expensive resource that gates the entire industry.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="term-section">
+          <div class="section-header sr sr-left">
+            <span class="sec-num">03</span>
+            <div>
+              <h2 class="sec-title">How You Use Them — Interaction</h2>
+              <p class="sec-desc sr sr-left" style="--sr-delay:90ms">Most of the value isn't in the model itself — it's in how you wire it into your data, your tools, and your workflow.</p>
+            </div>
+          </div>
+          <div class="terms-grid">
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">17</span>
+                <div class="term-name-row"><h3 class="term-name">Prompt</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>The instructions you give the model. "Prompt engineering" is the craft of writing them well — it matters more than people expect.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">18</span>
+                <div class="term-name-row"><h3 class="term-name">System Prompt</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Hidden instructions a developer sets to shape behavior across every conversation — "you are a tax-research assistant…"</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">19</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">RAG</h3>
+                  <span class="term-chip">Retrieval-Augmented Generation</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Let the model look things up in your documents before answering, instead of relying only on training data. The standard pattern for working with private data.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">20</span>
+                <div class="term-name-row"><h3 class="term-name">Fine-Tuning</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Continuing to train an existing model on your data so it specializes. Cheaper than training from scratch; less needed now that prompts and RAG are powerful.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">21</span>
+                <div class="term-name-row"><h3 class="term-name">Agent</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>An AI that takes multi-step actions on its own — plans, calls tools, checks results, iterates. "Agentic" workflows are the 2025–26 frontier.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">22</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Tool Use</h3>
+                  <span class="term-chip">Function Calling</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>A model's ability to call external software — search, calculators, databases, APIs — rather than just produce text. What makes an agent useful.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">23</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">MCP</h3>
+                  <span class="term-chip">Model Context Protocol</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>An open standard (from Anthropic, now industry-adopted) for connecting AI models to data sources and tools. Think "USB-C for AI integrations."</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">24</span>
+                <div class="term-name-row"><h3 class="term-name">Multimodal</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Models that handle multiple input types at once: text + images + audio + video. Increasingly the default for frontier models.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="term-section">
+          <div class="section-header sr sr-left">
+            <span class="sec-num">04</span>
+            <div>
+              <h2 class="sec-title">Business &amp; Safety — Buyer Vocabulary</h2>
+              <p class="sec-desc sr sr-left" style="--sr-delay:90ms">The vocabulary that shows up in vendor pitches, compliance reviews, and 'is it safe to deploy this?' conversations.</p>
+            </div>
+          </div>
+          <div class="terms-grid">
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">25</span>
+                <div class="term-name-row"><h3 class="term-name">Hallucination</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>When a model produces plausible-sounding but false content. The #1 reliability problem in production AI.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">26</span>
+                <div class="term-name-row"><h3 class="term-name">Benchmark</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>A standardized test for model capability — MMLU, GPQA, SWE-Bench, HumanEval. Useful, but watch for "benchmaxing."</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">27</span>
+                <div class="term-name-row"><h3 class="term-name">Open vs. Closed</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Closed: you call a vendor's API (Claude, GPT). Open weights: you download and run the model yourself (Llama, Mistral, DeepSeek).</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">28</span>
+                <div class="term-name-row"><h3 class="term-name">Alignment</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>The work of making models behave the way humans want them to — helpful, honest, harmless. Both a research field and a product property.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">29</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">RLHF</h3>
+                  <span class="term-chip">Reinforcement Learning from Human Feedback</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>The standard technique that turns a raw LLM into a polite, useful assistant.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">30</span>
+                <div class="term-name-row"><h3 class="term-name">Guardrails</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Rules and filters that constrain what a model will do — refuse certain content, redact PII, stay in-policy.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">31</span>
+                <div class="term-name-row"><h3 class="term-name">Jailbreak</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>A prompt that tricks a model into bypassing its guardrails. The cat-and-mouse game of AI security.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">32</span>
+                <div class="term-name-row"><h3 class="term-name">Inference Cost</h3></div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>What you pay per token to use a model. Frontier models run roughly $1–$75 per million tokens; pricing drops ~10× per year.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="term-section">
+          <div class="section-header sr sr-left">
+            <span class="sec-num">05</span>
+            <div>
+              <h2 class="sec-title">The Labs — Who Builds the Models</h2>
+              <p class="sec-desc sr sr-left" style="--sr-delay:90ms">Eight labs build virtually every frontier model. Knowing who builds what unlocks every model name you'll hear.</p>
+            </div>
+          </div>
+          <div class="terms-grid">
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">33</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Anthropic</h3>
+                  <span class="term-chip">US · Founded 2021</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Builds the Claude family (Opus, Sonnet, Haiku). Safety- and reliability-focused. Backed by Amazon and Google.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">34</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">OpenAI</h3>
+                  <span class="term-chip">US · Founded 2015</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Builds GPT and ChatGPT, plus DALL-E (image) and Sora (video). Backed primarily by Microsoft.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">35</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Google DeepMind</h3>
+                  <span class="term-chip">US/UK · Google</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Google's AI division. Builds Gemini, Veo (video), Imagen (image), and the underlying transformer research.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">36</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Meta AI</h3>
+                  <span class="term-chip">US · Meta Platforms</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Builds the Llama family. The leader in "open-weights" models you can download and run yourself.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">37</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">xAI</h3>
+                  <span class="term-chip">US · Founded 2023</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Elon Musk's lab. Builds Grok, integrated into X (formerly Twitter). Fewer guardrails by design.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">38</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Mistral AI</h3>
+                  <span class="term-chip">France · Founded 2023</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>European frontier lab. Strong open-weights options; the EU's flagship AI player.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:40ms">
+              <div class="term-card-inner">
+                <span class="term-index">39</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">DeepSeek</h3>
+                  <span class="term-chip">China · Founded 2023</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Chinese lab famous for matching frontier performance at a small fraction of the training cost. Open weights.</p></div>
+              </div>
+            </div>
+            <div class="term-card sr" style="--sr-delay:120ms">
+              <div class="term-card-inner">
+                <span class="term-index">40</span>
+                <div class="term-name-row">
+                  <h3 class="term-name">Alibaba (Qwen)</h3>
+                  <span class="term-chip">China · Alibaba Cloud</span>
+                </div>
+                <button class="term-toggle">+ Definition</button>
+                <div class="term-def"><p>Strong multilingual frontier models from a Chinese tech giant. Open weights; popular outside the US.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /sub-core-terms -->
+
+    <!-- ---- Sub-page: The Labs ---- -->
+    <div id="sub-the-labs" class="sub-page">
+      <div class="container">
+        <div class="sub-header">
+          <h2 class="sub-heading">Eight Frontier Labs</h2>
+          <p class="sub-subheading">Investment, hosting, and access all flow through these eight names. Five American, one French, two Chinese.</p>
+        </div>
+        <div class="labs-grid">
+          <div class="lab-card sr" style="--sr-delay:0ms">
+            <div class="lab-flag-row">🇺🇸 US · Founded 2021</div>
+            <h3 class="lab-name">Anthropic</h3>
+            <p class="lab-desc">Builds the <strong>Claude family</strong> (Opus, Sonnet, Haiku). <strong>Safety- and reliability-focused</strong>. Backed by <strong>Amazon and Google</strong>.</p>
+          </div>
+          <div class="lab-card sr" style="--sr-delay:70ms">
+            <div class="lab-flag-row">🇺🇸 US · Founded 2015</div>
+            <h3 class="lab-name">OpenAI</h3>
+            <p class="lab-desc">Builds <strong>GPT and ChatGPT</strong>, plus <strong>DALL-E</strong> (image) and <strong>Sora</strong> (video). Backed primarily by <strong>Microsoft</strong>.</p>
+          </div>
+          <div class="lab-card sr" style="--sr-delay:140ms">
+            <div class="lab-flag-row">🇺🇸🇬🇧 US/UK · Google</div>
+            <h3 class="lab-name">Google DeepMind</h3>
+            <p class="lab-desc">Google's AI division. Builds <strong>Gemini</strong>, <strong>Veo</strong> (video), <strong>Imagen</strong> (image), and the underlying <strong>transformer research</strong>.</p>
+          </div>
+          <div class="lab-card sr" style="--sr-delay:210ms">
+            <div class="lab-flag-row">🇺🇸 US · Meta Platforms</div>
+            <h3 class="lab-name">Meta AI</h3>
+            <p class="lab-desc">Builds the <strong>Llama family</strong>. The leader in <strong>open-weights</strong> models you can download and run yourself.</p>
+          </div>
+          <div class="lab-card sr" style="--sr-delay:70ms">
+            <div class="lab-flag-row">🇺🇸 US · Founded 2023</div>
+            <h3 class="lab-name">xAI</h3>
+            <p class="lab-desc">Elon Musk's lab. Builds <strong>Grok</strong>, integrated into <strong>X (formerly Twitter)</strong>. <strong>Fewer guardrails</strong> by design.</p>
+          </div>
+          <div class="lab-card sr" style="--sr-delay:140ms">
+            <div class="lab-flag-row">🇫🇷 France · Founded 2023</div>
+            <h3 class="lab-name">Mistral AI</h3>
+            <p class="lab-desc">European frontier lab. Strong <strong>open-weights</strong> options; the <strong>EU's flagship AI player</strong>.</p>
+          </div>
+          <div class="lab-card sr" style="--sr-delay:210ms">
+            <div class="lab-flag-row">🇨🇳 China · Founded 2023</div>
+            <h3 class="lab-name">DeepSeek</h3>
+            <p class="lab-desc">Chinese lab famous for matching <strong>frontier performance</strong> at a <strong>small fraction</strong> of the training cost. Open weights.</p>
+          </div>
+          <div class="lab-card sr" style="--sr-delay:280ms">
+            <div class="lab-flag-row">🇨🇳 China · Alibaba Cloud</div>
+            <h3 class="lab-name">Alibaba (Qwen)</h3>
+            <p class="lab-desc">Strong <strong>multilingual frontier models</strong> from a Chinese tech giant. Open weights; popular <strong>outside the US</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /sub-the-labs -->
+
+    <!-- ---- Sub-page: Model Catalog ---- -->
+    <div id="sub-model-catalog" class="sub-page">
+      <div class="container">
+        <div class="sub-header">
+          <h2 class="sub-heading">Frontier Language Models</h2>
+          <p class="sub-subheading">The general-purpose chat-and-reasoning models you'll see in every RFP and procurement document.</p>
+        </div>
+        <div class="table-scroll-wrapper">
+          <table class="model-table">
+            <thead>
+              <tr>
+                <th>Model Family</th>
+                <th>Owner</th>
+                <th>Access</th>
+                <th>What It's Best At</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="sr">
+                <td class="model-family">Claude<br><span class="model-sub">Opus · Sonnet · Haiku</span></td>
+                <td>Anthropic</td>
+                <td><span class="access-badge closed">Closed API</span></td>
+                <td><strong>Long context</strong>, <strong>careful writing</strong>, <strong>coding</strong>, <strong>agentic workflows</strong>. The default for <strong>safety-sensitive work</strong>.</td>
+              </tr>
+              <tr class="sr">
+                <td class="model-family">GPT-5, GPT-4o, o3<br><span class="model-sub">GPT family · o-series</span></td>
+                <td>OpenAI</td>
+                <td><span class="access-badge closed">Closed API</span></td>
+                <td><strong>General-purpose</strong> with the <strong>biggest ecosystem</strong>. o3-line specializes in <strong>step-by-step reasoning</strong>.</td>
+              </tr>
+              <tr class="sr">
+                <td class="model-family">Gemini 2.5 Pro / Ultra</td>
+                <td>Google DeepMind</td>
+                <td><span class="access-badge closed">Closed API</span></td>
+                <td><strong>Native multimodal</strong> (text/image/video/audio); <strong>1M+ token context</strong>. Deep <strong>Google Workspace</strong> integration.</td>
+              </tr>
+              <tr class="sr">
+                <td class="model-family">Llama 3 / Llama 4</td>
+                <td>Meta</td>
+                <td><span class="access-badge open">Open Weights</span></td>
+                <td><strong>Strongest open-weights</strong> option. <strong>Download, self-host, fine-tune</strong> — no per-token vendor bill.</td>
+              </tr>
+              <tr class="sr">
+                <td class="model-family">Grok 3 / Grok 4</td>
+                <td>xAI</td>
+                <td><span class="access-badge closed">Closed API</span></td>
+                <td><strong>Real-time data</strong> from X (Twitter). <strong>Looser guardrails</strong>; positioned as an alternative to mainstream labs.</td>
+              </tr>
+              <tr class="sr">
+                <td class="model-family">Mistral Large, Mixtral</td>
+                <td>Mistral AI</td>
+                <td><span class="access-badge both">Open + API</span></td>
+                <td><strong>European data residency</strong>. Strong <strong>open-weights choices</strong> for self-hosting in the EU.</td>
+              </tr>
+              <tr class="sr">
+                <td class="model-family">DeepSeek R1 / V3</td>
+                <td>DeepSeek</td>
+                <td><span class="access-badge open">Open Weights</span></td>
+                <td><strong>Frontier-class reasoning</strong> at a fraction of the cost. Trained for a reported ~<strong>$5M</strong>; weights downloadable.</td>
+              </tr>
+              <tr class="sr">
+                <td class="model-family">Qwen 2.5 / Qwen 3</td>
+                <td>Alibaba</td>
+                <td><span class="access-badge open">Open Weights</span></td>
+                <td><strong>Best-in-class</strong> for <strong>Chinese and multilingual</strong> tasks. Widely used in <strong>Asian enterprise</strong> deployments.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div><!-- /sub-model-catalog -->
+
+    <!-- ---- Sub-page: Category Leaders ---- -->
+    <div id="sub-category-leaders" class="sub-page">
+      <div class="container">
+        <div class="sub-header">
+          <h2 class="sub-heading">Who Leads What Category</h2>
+          <p class="sub-subheading">Text is the largest category, but the frontier extends in every direction. These are the model families you'll see named in product launches.</p>
+        </div>
+        <div class="categories-list">
+          <div class="category-block sr" style="--sr-delay:0ms">
+            <div class="cat-label">Category 01</div>
+            <h3 class="cat-name">Reasoning Models</h3>
+            <p class="cat-desc">Models that 'think' step-by-step before answering. Slower and more expensive, but better at math, code, and analysis.</p>
+            <div class="leader-chips">
+              <div class="leader-chip"><span class="chip-model">Claude · extended thinking</span><span class="chip-owner">Anthropic</span></div>
+              <div class="leader-chip"><span class="chip-model">o3, o4-mini</span><span class="chip-owner">OpenAI</span></div>
+              <div class="leader-chip"><span class="chip-model">Gemini 2.5 Thinking</span><span class="chip-owner">Google</span></div>
+              <div class="leader-chip"><span class="chip-model">DeepSeek R1</span><span class="chip-owner">DeepSeek</span></div>
+            </div>
+          </div>
+          <div class="category-block sr" style="--sr-delay:60ms">
+            <div class="cat-label">Category 02</div>
+            <h3 class="cat-name">Image Generation</h3>
+            <p class="cat-desc">Text-in, image-out. Used for marketing, design comps, illustration, and editing.</p>
+            <div class="leader-chips">
+              <div class="leader-chip"><span class="chip-model">DALL-E 3</span><span class="chip-owner">OpenAI</span></div>
+              <div class="leader-chip"><span class="chip-model">Midjourney v7</span><span class="chip-owner">Midjourney Inc.</span></div>
+              <div class="leader-chip"><span class="chip-model">Stable Diffusion</span><span class="chip-owner">Stability AI</span></div>
+              <div class="leader-chip"><span class="chip-model">Imagen 4 · Firefly</span><span class="chip-owner">Google · Adobe</span></div>
+            </div>
+          </div>
+          <div class="category-block sr" style="--sr-delay:120ms">
+            <div class="cat-label">Category 03</div>
+            <h3 class="cat-name">Video Generation</h3>
+            <p class="cat-desc">Text- or image-in, short video-out. The fastest-moving category in 2025–26.</p>
+            <div class="leader-chips">
+              <div class="leader-chip"><span class="chip-model">Sora</span><span class="chip-owner">OpenAI</span></div>
+              <div class="leader-chip"><span class="chip-model">Veo 3</span><span class="chip-owner">Google</span></div>
+              <div class="leader-chip"><span class="chip-model">Runway Gen-3</span><span class="chip-owner">Runway</span></div>
+              <div class="leader-chip"><span class="chip-model">Kling</span><span class="chip-owner">Kuaishou (CN)</span></div>
+            </div>
+          </div>
+          <div class="category-block sr" style="--sr-delay:180ms">
+            <div class="cat-label">Category 04</div>
+            <h3 class="cat-name">Voice &amp; Audio</h3>
+            <p class="cat-desc">Speech in, speech out — plus music and sound design.</p>
+            <div class="leader-chips">
+              <div class="leader-chip"><span class="chip-model">Whisper · STT</span><span class="chip-owner">OpenAI</span></div>
+              <div class="leader-chip"><span class="chip-model">ElevenLabs · synthesis</span><span class="chip-owner">ElevenLabs</span></div>
+              <div class="leader-chip"><span class="chip-model">Suno · music</span><span class="chip-owner">Suno</span></div>
+              <div class="leader-chip"><span class="chip-model">Claude voice mode</span><span class="chip-owner">Anthropic</span></div>
+            </div>
+          </div>
+          <div class="category-block sr" style="--sr-delay:240ms">
+            <div class="cat-label">Category 05</div>
+            <h3 class="cat-name">Code-Specific Tools</h3>
+            <p class="cat-desc">Coding assistants — model + IDE integration. The model under the hood is usually Claude or GPT.</p>
+            <div class="leader-chips">
+              <div class="leader-chip"><span class="chip-model">GitHub Copilot</span><span class="chip-owner">GitHub / Microsoft</span></div>
+              <div class="leader-chip"><span class="chip-model">Cursor</span><span class="chip-owner">Anysphere</span></div>
+              <div class="leader-chip"><span class="chip-model">Cody</span><span class="chip-owner">Sourcegraph</span></div>
+              <div class="leader-chip"><span class="chip-model">Claude Code</span><span class="chip-owner">Anthropic</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /sub-category-leaders -->
+
+  </div><!-- /page-library -->
+
+  <!-- ========== PAGE: PRACTICE ========== -->
+  <div id="page-practice" class="page">
+
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-inner">
+        <div class="hero-eyebrow"><span class="rule"></span>PRACTICE MODE<span class="rule"></span></div>
+        <h1 class="hero-headline">Train your <em>recall</em>.</h1>
+        <p class="hero-subtitle">Flashcards covering all 40 terms plus labs and models — or race the clock in the match game.</p>
+        <div class="mode-pills">
+          <button class="mode-pill active" id="mode-flashcards">Flashcards</button>
+          <button class="mode-pill" id="mode-match">Match Game</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flashcards mode -->
+    <div id="flashcard-mode" class="practice-mode container">
+      <div class="score-strip">
+        <div class="score-cell"><span class="score-num orange" id="fc-known">0</span><span class="score-lbl">Known</span></div>
+        <div class="score-cell"><span class="score-num" id="fc-remaining">40</span><span class="score-lbl">Remaining</span></div>
+        <div class="score-cell"><span class="score-num" id="fc-deck-size">40</span><span class="score-lbl">Deck Size</span></div>
+      </div>
+      <div id="flashcard-start-screen" class="fc-center">
+        <button class="btn-primary" id="fc-start-btn">Start →</button>
+      </div>
+      <div id="flashcard-game" class="fc-game" style="display:none">
+        <div class="flip-card" id="flip-card">
+          <div class="flip-card-inner" id="flip-card-inner">
+            <div class="flip-front">
+              <div class="fc-face-label">TERM</div>
+              <div class="fc-term-name" id="fc-term-name">Term Name</div>
+            </div>
+            <div class="flip-back">
+              <div class="fc-face-label def-label">DEFINITION</div>
+              <div class="fc-def-text" id="fc-def-text">Definition text here.</div>
+            </div>
+          </div>
+        </div>
+        <p class="flip-hint" id="flip-hint">Click card to reveal definition</p>
+        <div class="fc-buttons" id="fc-buttons" style="display:none">
+          <button class="btn-wrong" id="fc-wrong-btn">✗ Still learning</button>
+          <button class="btn-right" id="fc-right-btn">✓ Got it</button>
+        </div>
+      </div>
+      <div id="flashcard-complete" class="fc-center" style="display:none">
+        <p class="fc-complete-msg">Deck complete.</p>
+        <div class="fc-complete-btns">
+          <button class="btn-primary" id="fc-restart-btn">Restart full deck</button>
+          <button class="btn-outline" id="fc-review-missed-btn">Review missed only</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Match Game mode -->
+    <div id="match-mode" class="practice-mode container" style="display:none">
+      <div class="score-strip">
+        <div class="score-cell"><span class="score-num orange" id="mg-matched">0</span><span class="score-lbl">Matched</span></div>
+        <div class="score-cell"><span class="score-num" id="mg-attempts">0</span><span class="score-lbl">Attempts</span></div>
+        <div class="score-cell"><span class="score-num" id="mg-time">0</span><span class="score-lbl">Seconds</span></div>
+      </div>
+      <div id="match-grid" class="match-grid"></div>
+      <div id="match-complete" class="fc-center" style="display:none">
+        <p class="fc-complete-msg">All matched.</p>
+        <p class="match-result-detail" id="match-result-detail"></p>
+        <button class="btn-primary" id="mg-play-again-btn">Play again</button>
+      </div>
+    </div>
+
+  </div><!-- /page-practice -->
+
+  <!-- ========== PAGE: EXAM ========== -->
+  <div id="page-exam" class="page">
+
+    <section class="hero">
+      <div class="hero-glow"></div>
+      <div class="hero-inner">
+        <div class="hero-eyebrow"><span class="rule"></span>ASSESSMENT<span class="rule"></span></div>
+        <h1 class="hero-headline">Put it to the <em>test</em>.</h1>
+        <p class="hero-subtitle">Questions drawn from all four sections — terms, labs, models, and category leaders. Full review at the end.</p>
+      </div>
+    </section>
+
+    <div class="container">
+
+      <!-- Start screen -->
+      <div id="exam-start" class="exam-start">
+        <h2 class="exam-choose-heading">Choose exam length</h2>
+        <div class="exam-length-cards">
+          <button class="exam-length-card" data-count="10">
+            <span class="elc-num">10</span>
+            <span class="elc-label">Quick check</span>
+          </button>
+          <button class="exam-length-card" data-count="20">
+            <span class="elc-num">20</span>
+            <span class="elc-label">Standard</span>
+          </button>
+          <button class="exam-length-card" data-count="40">
+            <span class="elc-num">40</span>
+            <span class="elc-label">Comprehensive</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Exam in progress -->
+      <div id="exam-progress-bar-wrap" style="display:none">
+        <div class="exam-progress-bar-bg">
+          <div class="exam-progress-bar-fill" id="exam-progress-fill"></div>
+        </div>
+        <div class="exam-counter" id="exam-counter">1 / 10</div>
+      </div>
+      <div id="exam-question-area" style="display:none">
+        <div class="question-card" id="question-card">
+          <div class="q-type-label" id="q-type-label">◆ Multiple Choice</div>
+          <div class="q-text" id="q-text">Question text</div>
+          <div class="q-options" id="q-options"></div>
+          <div class="q-feedback" id="q-feedback" style="display:none"></div>
+          <button class="btn-primary" id="q-next-btn" style="display:none">Next →</button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div id="exam-results" style="display:none">
+        <div class="results-score-display">
+          <span class="results-score-num" id="results-score-num">17</span>
+          <span class="results-score-denom" id="results-score-denom">/20</span>
+        </div>
+        <div class="results-pct-label" id="results-pct-label">85% correct</div>
+        <div class="results-grade-pill" id="results-grade-pill">Good — nearly there</div>
+        <div class="results-review" id="results-review"></div>
+        <div class="results-btns">
+          <button class="btn-primary" id="new-exam-btn">New exam</button>
+          <button class="btn-outline" id="back-to-library-btn">Back to library</button>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /page-exam -->
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    <p class="footer-text">CORDUROY <span class="footer-accent">INTELLIGENCE</span> · AI LITERACY PROGRAM · CORDUROYINTELLIGENCE.COM</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
