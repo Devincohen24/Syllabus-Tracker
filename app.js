@@ -183,6 +183,12 @@ navTabs.forEach(tab => {
   });
 });
 
+/* Hidden shortcut: clicking the "C" logo gathers the Library
+   particles at their average position */
+document.querySelector('.logo-mark').addEventListener('click', () => {
+  if (currentPage === 'library' && window._particleGather) window._particleGather();
+});
+
 /* Back to library button in exam */
 document.getElementById('back-to-library-btn').addEventListener('click', () => {
   document.querySelector('.nav-tab[data-page="library"]').click();
@@ -843,6 +849,20 @@ document.getElementById('new-exam-btn').addEventListener('click', () => {
   }
   window.addEventListener('resize', resize);
 
+  // ── hidden gather easter egg (Library only) ─────────────────
+  // Triggered by clicking the "C" logo: particles collapse to
+  // their average position, then release.
+  let gatherPoint = null;
+  let gatherUntil = 0;
+
+  window._particleGather = function() {
+    if (activePage !== 'library' || !libParticles.length) return;
+    let sx = 0, sy = 0;
+    for (const p of libParticles) { sx += p.x; sy += p.y; }
+    gatherPoint = { x: sx / libParticles.length, y: sy / libParticles.length };
+    gatherUntil = performance.now() + 2600;
+  };
+
   // ── page switch hook ─────────────────────────────────────────
   // Called from showPage() in the main app logic
   window._particleSetPage = function(page) {
@@ -886,11 +906,23 @@ document.getElementById('new-exam-btn').addEventListener('click', () => {
   function libraryDraw() {
     ctx.clearRect(0, 0, width, height);
 
+    const gathering = gatherPoint && performance.now() < gatherUntil;
+    if (gatherPoint && !gathering) gatherPoint = null;
+
     for (const p of libParticles) {
-      // Mouse repulsion
       const dx = p.x - mouse.x, dy = p.y - mouse.y;
       const dist = Math.hypot(dx, dy);
-      if (dist < LIB_MOUSE_R && dist > 0.001) {
+
+      if (gathering) {
+        // Pull every particle toward the swarm's average position
+        const gx = gatherPoint.x - p.x, gy = gatherPoint.y - p.y;
+        const gd = Math.hypot(gx, gy);
+        if (gd > 6) {
+          p.vx += (gx / gd) * Math.min(gd * 0.012, 1.4);
+          p.vy += (gy / gd) * Math.min(gd * 0.012, 1.4);
+        }
+      } else if (dist < LIB_MOUSE_R && dist > 0.001) {
+        // Mouse repulsion (suspended while gathering)
         const f = (LIB_MOUSE_R - dist) / LIB_MOUSE_R;
         p.vx += (dx / dist) * f * 0.7;
         p.vy += (dy / dist) * f * 0.7;
