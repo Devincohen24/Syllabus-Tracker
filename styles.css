@@ -41,6 +41,55 @@ body {
   min-height: 100vh;
 }
 
+/* ---- Particle Canvas (mouse-reactive background) ---- */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Keep all real content above the canvas */
+#main-nav, #scroll-progress, .page, footer { position: relative; z-index: 1; }
+#main-nav { position: sticky; }
+#scroll-progress { position: fixed; }
+
+@media (prefers-reduced-motion: reduce) {
+  #particle-canvas { display: none; }
+}
+
+/* ---- Cursor glow on cards ----
+   JS sets --mx / --my to the cursor position inside the card. */
+.term-card, .lab-card, .category-block, .exam-length-card, .question-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.term-card::before, .lab-card::before, .category-block::before,
+.exam-length-card::before, .question-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(180px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(201,106,42,0.10), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.term-card:hover::before, .lab-card:hover::before, .category-block:hover::before,
+.exam-length-card:hover::before, .question-card:hover::before {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .term-card::before, .lab-card::before, .category-block::before,
+  .exam-length-card::before, .question-card::before { display: none; }
+}
+
 /* ---- Scroll Progress Bar ---- */
 #scroll-progress {
   position: fixed;

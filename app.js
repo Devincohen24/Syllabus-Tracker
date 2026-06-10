@@ -801,6 +801,137 @@ document.getElementById('new-exam-btn').addEventListener('click', () => {
 });
 
 /* ============================================================
+   PARTICLE FIELD (mouse-reactive background)
+   ============================================================ */
+
+(function initParticles() {
+  if (prefersReducedMotion) return;
+
+  const canvas = document.getElementById('particle-canvas');
+  const ctx = canvas.getContext('2d');
+  let width, height, particles;
+  const mouse = { x: -9999, y: -9999 };
+  const MOUSE_RADIUS = 140;       // px — how far the cursor influence reaches
+  const LINK_DIST = 110;          // px — max distance to draw a connecting line
+
+  function resize() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    // Scale particle count with viewport area, capped for performance
+    const count = Math.min(90, Math.floor((width * height) / 16000));
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: 1 + Math.random() * 1.8,
+        orange: Math.random() < 0.22, // most navy, some orange accents
+      });
+    }
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+
+  window.addEventListener('mousemove', e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  }, { passive: true });
+
+  window.addEventListener('mouseout', () => {
+    mouse.x = -9999;
+    mouse.y = -9999;
+  });
+
+  let running = true;
+  document.addEventListener('visibilitychange', () => {
+    running = !document.hidden;
+    if (running) requestAnimationFrame(frame);
+  });
+
+  function frame() {
+    if (!running) return;
+    ctx.clearRect(0, 0, width, height);
+
+    for (const p of particles) {
+      // Gentle repulsion from the cursor
+      const dx = p.x - mouse.x;
+      const dy = p.y - mouse.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist < MOUSE_RADIUS && dist > 0.001) {
+        const force = (MOUSE_RADIUS - dist) / MOUSE_RADIUS;
+        p.vx += (dx / dist) * force * 0.6;
+        p.vy += (dy / dist) * force * 0.6;
+      }
+
+      // Damping keeps speeds from running away after a push
+      p.vx *= 0.96;
+      p.vy *= 0.96;
+      // Maintain a tiny baseline drift
+      if (Math.abs(p.vx) < 0.05) p.vx += (Math.random() - 0.5) * 0.04;
+      if (Math.abs(p.vy) < 0.05) p.vy += (Math.random() - 0.5) * 0.04;
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Wrap around edges
+      if (p.x < -10) p.x = width + 10;
+      if (p.x > width + 10) p.x = -10;
+      if (p.y < -10) p.y = height + 10;
+      if (p.y > height + 10) p.y = -10;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.orange ? 'rgba(201,106,42,0.35)' : 'rgba(26,39,68,0.22)';
+      ctx.fill();
+    }
+
+    // Connecting lines between nearby particles; brighter near the cursor
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i], b = particles[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d = Math.hypot(dx, dy);
+        if (d < LINK_DIST) {
+          const midX = (a.x + b.x) / 2, midY = (a.y + b.y) / 2;
+          const mDist = Math.hypot(midX - mouse.x, midY - mouse.y);
+          const nearMouse = mDist < MOUSE_RADIUS * 1.4;
+          const alpha = (1 - d / LINK_DIST) * (nearMouse ? 0.28 : 0.10);
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = nearMouse
+            ? 'rgba(201,106,42,' + alpha + ')'
+            : 'rgba(26,39,68,' + alpha + ')';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+})();
+
+/* ============================================================
+   CURSOR GLOW ON CARDS
+   ============================================================ */
+
+if (!prefersReducedMotion) {
+  document.addEventListener('mousemove', e => {
+    const card = e.target.closest('.term-card, .lab-card, .category-block, .exam-length-card, .question-card');
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+  }, { passive: true });
+}
+
+/* ============================================================
    INIT
    ============================================================ */
 
